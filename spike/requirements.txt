@@ -1,0 +1,6 @@
+beautifulsoup4
+boto3
+html5lib
+keyring
+requests
+requests_ntlm
