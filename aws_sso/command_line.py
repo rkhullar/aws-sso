@@ -10,7 +10,7 @@ import getpass
 def build_parser() -> ArgumentParser:
     parser = ArgumentParser()
     subparsers = parser.add_subparsers(dest='action')
-    subparsers.required = False
+    subparsers.required = True
 
     hello_parser = subparsers.add_parser('hello')
     hello_parser.add_argument('--message', '-m', type=str, default='hello world')
@@ -20,6 +20,10 @@ def build_parser() -> ArgumentParser:
     add_site_parser.add_argument('--domain', '-d', type=str, required=True)
     add_site_parser.add_argument('--username', '-u', type=str, required=True)
     add_site_parser.add_argument('--password', '-p', type=str, required=False)
+
+    profile_parser = subparsers.add_parser('profile')
+    profile_parser.add_argument('--domain', '-d', type=str, required=True)
+    profile_parser.add_argument('--skip-names', action='count')
 
     return parser
 
