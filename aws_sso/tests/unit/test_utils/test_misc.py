@@ -1,7 +1,7 @@
-from parameterized import parameterized
+from ....utils import *
 from nose.tools import assert_equal
+from parameterized import parameterized
 from unittest import TestCase
-from ...utils import *
 
 
 class UtilsTest(TestCase):
@@ -26,13 +26,3 @@ class UtilsTest(TestCase):
     def test_build_domain_username(self, domain, username, expected):
         actual = build_domain_username(domain, username)
         assert_equal(expected, actual)
-
-
-class HelloTest(TestCase):
-
-    def test_mock_io(self):
-        message: str = 'this is the kitchen'
-        with mock_input_output() as mocked:
-            hello(message=message, count=1)
-        actual = mocked.stdout.read().strip('\r\n')
-        assert_equal(message, actual)

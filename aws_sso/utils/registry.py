@@ -1,10 +1,6 @@
 from typing import Callable, Dict, Type
 
 
-def register_service(cls):
-    pass
-
-
 def register_handler(action: str, mapping_name: str = '__actions__'):
 
     # https://stackoverflow.com/questions/3589311/get-defining-class-of-unbound-method-object-in-python-3/25959545#25959545

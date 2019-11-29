@@ -1,15 +1,16 @@
-from argparse import ArgumentParser, Namespace
-from .utils import extend_parsers, namespace_to_tuple
 from .abstract import AbstractService, ServiceDef
 from .model import CommonParams
-from typing import NamedTuple
 from .services import *
+from .utils import extend_parsers, namespace_to_tuple
+
+from argparse import ArgumentParser, Namespace
+from typing import NamedTuple
 
 
-def build_parser() -> ArgumentParser:
+def build_parser(service_required: bool = True) -> ArgumentParser:
     parser = ArgumentParser()
     subparsers = parser.add_subparsers(dest='service')
-    subparsers.required = False
+    subparsers.required = service_required
 
     service_parsers = extend_parsers(subparsers, service=True, names=['site'])
     action_parsers = extend_parsers(subparsers, service=False, names=['print', 'discover'])
@@ -22,6 +23,11 @@ def build_parser() -> ArgumentParser:
     add_site_parser.add_argument('--domain', '-d', type=str, required=True)
     add_site_parser.add_argument('--username', '-u', type=str, required=True)
     add_site_parser.add_argument('--password', '-p', type=str, required=False)
+
+    remove_site_parser = service_parsers['site'].add_parser('remove')
+    remove_site_parser.add_argument('--domain', '-d', type=str, required=True)
+
+    service_parsers['site'].add_parser('list')
 
     discover_parser = action_parsers['discover']
     discover_parser.add_argument('--domain', '-d', type=str, required=True)
@@ -38,7 +44,7 @@ services = {
 
 
 def main():
-    parser: ArgumentParser = build_parser()
+    parser: ArgumentParser = build_parser(service_required=True)
     args: Namespace = parser.parse_args()
     common_params: CommonParams = namespace_to_tuple(args, CommonParams)
     service_name: str = common_params.service or 'default'

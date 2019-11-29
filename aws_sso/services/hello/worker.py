@@ -1,5 +1,5 @@
 from ...abstract import AbstractService
-from ...registry import register_handler
+from ...utils import register_handler
 from io import StringIO
 import sys
 

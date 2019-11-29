@@ -1,23 +1,25 @@
-from typing import Any, Dict, NamedTuple, Type
-from .utils import combine_named_tuples
 from .model import CommonParams
-import abc
+from .utils import combine_named_tuples
+
+from abc import ABC
+from typing import Any, Dict, NamedTuple, Type
 
 
-class AbstractService(abc.ABC):
+class AbstractService(ABC):
 
     # cannot define here
     # __actions__: Dict[str, Callable] = dict()
 
-    def __init__(self, common_params: CommonParams, service_params: NamedTuple):
+    def __init__(self, common_params: CommonParams, service_params: NamedTuple, default_action: str = 'default'):
         self.params: NamedTuple = combine_named_tuples(common_params, service_params, handle_methods=True)
+        self.default_action: str = default_action
         self.tools: Dict[str, Any] = dict()
         self.data: Dict[str, Any] = dict()
         self.initialize()
 
     def __call__(self, *args, **kwargs):
         # TODO: enforce __actions__ defined in subclass
-        action: str = self.params.action or 'default'
+        action: str = self.params.action or self.default_action
         if action in self.__actions__:
             handler = self.__actions__[action]
             result = handler(self, *args, **kwargs)
