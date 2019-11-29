@@ -9,7 +9,7 @@ from .services import *
 def build_parser() -> ArgumentParser:
     parser = ArgumentParser()
     subparsers = parser.add_subparsers(dest='service')
-    subparsers.required = True
+    subparsers.required = False
 
     service_parsers = extend_parsers(subparsers, service=True, names=['site'])
     action_parsers = extend_parsers(subparsers, service=False, names=['print', 'discover'])
@@ -41,7 +41,7 @@ def main():
     parser: ArgumentParser = build_parser()
     args: Namespace = parser.parse_args()
     common_params: CommonParams = namespace_to_tuple(args, CommonParams)
-    service_name: str = common_params.service
+    service_name: str = common_params.service or 'default'
     service_def: ServiceDef = services[service_name]
     service_params: NamedTuple = namespace_to_tuple(args, service_def.param_type)
     service: AbstractService = service_def.service_type(common_params, service_params)

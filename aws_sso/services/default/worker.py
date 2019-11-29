@@ -1,5 +1,10 @@
 from ...abstract import AbstractService
+from ...registry import register_handler
 
 
 class DefaultWorker(AbstractService):
-    pass
+
+    @register_handler('default')
+    def main(self):
+        print('default service default action')
+        print(self.params)
