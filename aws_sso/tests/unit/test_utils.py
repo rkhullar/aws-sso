@@ -1,7 +1,7 @@
 from parameterized import parameterized
 from nose.tools import assert_equal
 from unittest import TestCase
-from ..utils import *
+from ...utils import *
 
 
 class UtilsTest(TestCase):
@@ -30,10 +30,9 @@ class UtilsTest(TestCase):
 
 class HelloTest(TestCase):
 
-    def test_stdout(self):
+    def test_mock_io(self):
         message: str = 'this is the kitchen'
-        with mocked_stdio() as context:
+        with mock_input_output() as mocked:
             hello(message=message, count=1)
-        context.stdout.seek(0)
-        actual = context.stdout.read().strip('\r\n')
+        actual = mocked.stdout.read().strip('\r\n')
         assert_equal(message, actual)
