@@ -19,3 +19,8 @@ def register_handler(action: str, mapping_name: str = '__actions__'):
             setattr(owner, name, self.fn)
 
     return RegistryHandler
+
+
+def register_service(cls):
+    # TODO: discover methods within a class with prefix "handle_" and populate the actions
+    pass
