@@ -26,4 +26,3 @@ def _extend_parsers_single(parsers, name: str, service: bool, target: str):
 
 def _extend_parsers_multi(parsers, names: List[str], service: bool, target: str) -> Dict:
     return {name: _extend_parsers_single(parsers=parsers, name=name, service=service, target=target) for name in names}
-
