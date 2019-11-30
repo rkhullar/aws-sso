@@ -1,7 +1,7 @@
 from typing import Callable, Dict, Type
 
 
-def register_handler(action: str, mapping_name: str = '__actions__'):
+def register_action(action: str, mapping_name: str = '__actions__'):
 
     # https://stackoverflow.com/questions/3589311/get-defining-class-of-unbound-method-object-in-python-3/25959545#25959545
 
@@ -22,5 +22,4 @@ def register_handler(action: str, mapping_name: str = '__actions__'):
 
 
 def register_service(cls):
-    # TODO: discover methods within a class with prefix "handle_" and populate the actions
-    pass
+    """discover methods within a class with prefix "handle_" and populate the actions"""

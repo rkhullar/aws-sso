@@ -37,9 +37,10 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
 
 
 services = {
+    'default': ServiceDef(DefaultParams, DefaultWorker),
+    'discover': ServiceDef(DiscoveryParams, DiscoveryWorker),
     'print': ServiceDef(HelloParams, HelloWorker),
-    'sites': ServiceDef(SiteParams, SiteWorker),
-    'default': ServiceDef(DefaultParams, DefaultWorker)
+    'site': ServiceDef(SiteParams, SiteWorker),
 }
 
 
@@ -52,15 +53,3 @@ def main():
     service_params: NamedTuple = namespace_to_tuple(args, service_def.param_type)
     service: AbstractService = service_def.service_type(common_params, service_params)
     service()
-
-    '''
-    if args.action == 'hello':
-        hello(message=args.message, count=args.count)
-
-    elif args.action == 'add-site':
-        args.password = args.password or getpass.getpass(prompt='password: ', stream=None)
-        add_site(domain=args.domain, username=args.username, password=args.password)
-
-    elif args.action == 'discover':
-        discover(domain=args.domain, skip_names=bool(args.skip_names))
-    '''

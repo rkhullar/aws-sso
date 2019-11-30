@@ -1,5 +1,5 @@
 from ...abstract import AbstractService
-from ...utils import register_handler
+from ...utils import register_action
 from io import StringIO
 import sys
 
@@ -11,6 +11,6 @@ class HelloWorker(AbstractService):
         for _ in range(count):
             print(message, file=file or sys.stdout)
 
-    @register_handler('default')
+    @register_action('default')
     def main(self):
         self.hello(message=self.params.message, count=self.params.count)

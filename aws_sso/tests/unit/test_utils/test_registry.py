@@ -1,4 +1,4 @@
-from ....utils import register_handler
+from ....utils import register_action
 from nose.tools import *
 from unittest import TestCase
 
@@ -8,7 +8,7 @@ class RegistryTest(TestCase):
     def test_root(self):
 
         class Worker:
-            @register_handler('test')
+            @register_action('test')
             def handle_test(self):
                 pass
 
@@ -24,7 +24,7 @@ class RegistryTest(TestCase):
             pass
 
         class Child(Parent):
-            @register_handler('test')
+            @register_action('test')
             def handle_test(self):
                 pass
 

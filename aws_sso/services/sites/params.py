@@ -1,5 +1,7 @@
-from typing import NamedTuple
+from typing import NamedTuple, Optional
 
 
 class SiteParams(NamedTuple):
-    pass
+    domain: str
+    username: str
+    password: Optional[str]
