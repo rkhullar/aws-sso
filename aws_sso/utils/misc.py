@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import List, Optional
 
 
@@ -23,4 +24,11 @@ def string_contains(text: str, keys: List[str]) -> bool:
     return any(key in text for key in keys)
 
 
-__all__ = ['get_package_root', 'infer_domain', 'build_domain_username', 'string_contains']
+def read_hello_txt() -> str:
+    here: Path = Path(__file__).parents[1]
+    target = here / 'data' / 'hello.txt'
+    with target.open('r') as f:
+        return f.read().strip()
+
+
+__all__ = ['get_package_root', 'infer_domain', 'build_domain_username', 'string_contains', 'read_hello_txt']

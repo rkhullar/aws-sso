@@ -6,6 +6,9 @@ from unittest import TestCase
 
 class UtilsTest(TestCase):
 
+    def test_read_hello_txt(self):
+        assert_equal(read_hello_txt(), 'hello world')
+
     def test_package_root(self):
         assert_equal(get_package_root(), 'aws_sso')
 
