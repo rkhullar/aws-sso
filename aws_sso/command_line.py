@@ -20,17 +20,17 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
     hello_parser.add_argument('-c', '--count', type=int, default=1)
 
     add_site_parser = service_parsers['site'].add_parser('add')
-    add_site_parser.add_argument('--domain', '-d', type=str, required=True)
-    add_site_parser.add_argument('--username', '-u', type=str, required=True)
-    add_site_parser.add_argument('--password', '-p', type=str, required=False)
+    add_site_parser.add_argument('-d', '--domain', type=str, required=True)
+    add_site_parser.add_argument('-u', '--username', type=str, required=True)
+    add_site_parser.add_argument('-p', '--password', type=str, required=False)
 
     remove_site_parser = service_parsers['site'].add_parser('remove')
-    remove_site_parser.add_argument('--domain', '-d', type=str, required=True)
+    remove_site_parser.add_argument('-d', '--domain', type=str, required=True)
 
     service_parsers['site'].add_parser('list')
 
     discover_parser = action_parsers['discover']
-    discover_parser.add_argument('--domain', '-d', type=str, required=True)
+    discover_parser.add_argument('-d', '--domain', type=str, required=True)
     discover_parser.add_argument('--skip-names', action='count')
 
     return parser
