@@ -26,3 +26,6 @@ class HelloTest(TestCase):
         actual = mocked.stdout.read().strip('\r\n')
         expected = self.build_hello(message=message, count=count)
         assert_equal(expected, actual)
+
+    def test_read(self):
+        assert_equal('hello world', HelloWorker.read())
