@@ -1,0 +1,2 @@
+include readme.md
+include aws_sso/data/*.txt
