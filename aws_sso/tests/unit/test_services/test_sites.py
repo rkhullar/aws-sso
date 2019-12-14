@@ -55,7 +55,7 @@ class SitesTest(TestCase):
         service_params = SiteParams(domain='sso.example.com', username='msdocs', password=str(uuid.uuid4()))
         domain_username = SiteWorker.build_domain_username(domain=service_params.domain, username=service_params.username)
         keyring_patches = self.build_keyring_patch(domain=service_params.domain, username=domain_username, password=service_params.password)
-        worker = SiteWorker(common_params, service_params)
+        worker = SiteWorker(common_params, service_params, initialize=False)
         with combine_contexts(keyring_patches, mock_input_output()), tempfile.TemporaryDirectory() as temp_dir:
             worker.patch_params(config_dir=str(Path(temp_dir) / '.config'))
             worker()
