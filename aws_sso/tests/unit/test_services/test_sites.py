@@ -1,12 +1,16 @@
 from ....services import KeyringAction, SiteLogin, SiteParams, SiteWorker
 from ....model import CommonParams
-from ....utils import mock_input_output,combine_contexts
+from ....utils import mock_input_output, combine_contexts
+
 from nose.tools import assert_equal
 from parameterized import parameterized
+from pathlib import Path
 from typing import Optional
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
+
 import keyring
+import tempfile
 import uuid
 
 
@@ -39,11 +43,11 @@ class SitesTest(TestCase):
 
     @classmethod
     def build_keyring_patch(cls, domain: str, username: str, password: Optional[str] = None, action: Optional[KeyringAction] = None):
+        params = dict(domain=domain, username=username, password=password)
         if action:
-            mock = cls.build_keyring_mock(action=action, domain=domain, username=username, password=password)
+            mock = cls.build_keyring_mock(action=action, **params)
             return patch.object(target=keyring, attribute=action.method, new=mock)
         else:
-            params = dict(domain=domain, username=username, password=password)
             return [cls.build_keyring_patch(action=KeyringAction[action], **params) for action in KeyringAction.actions()]
 
     def test_add_site(self):
@@ -52,5 +56,6 @@ class SitesTest(TestCase):
         domain_username = SiteWorker.build_domain_username(domain=service_params.domain, username=service_params.username)
         keyring_patches = self.build_keyring_patch(domain=service_params.domain, username=domain_username, password=service_params.password)
         worker = SiteWorker(common_params, service_params)
-        with combine_contexts(keyring_patches, mock_input_output()):
+        with combine_contexts(keyring_patches, mock_input_output()), tempfile.TemporaryDirectory() as temp_dir:
+            worker.patch_params(config_dir=str(Path(temp_dir) / '.config'))
             worker()

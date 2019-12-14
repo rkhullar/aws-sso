@@ -26,7 +26,7 @@ class SiteWorker(AbstractService):
 
     def initialize(self):
         self.data['service_name']: str = get_package_root()
-        self.data['config_dir']: Path = Path('~/.config').expanduser() / self.data['service_name']
+        self.data['config_dir']: Path = Path(self.params.config_dir).expanduser() / self.data['service_name']
         self.data['config_dir'].mkdir(parents=True, exist_ok=True)
         self.data['sites_path']: Path = self.data['config_dir'] / 'sites.ini'
 

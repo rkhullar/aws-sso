@@ -4,6 +4,8 @@ from typing import NamedTuple
 class CommonParams(NamedTuple):
     service: str
     action: str
+    aws_dir: str = '~/.aws'
+    config_dir: str = '~/.config'
 
 
 class RoleTuple(NamedTuple):

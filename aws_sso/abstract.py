@@ -17,6 +17,8 @@ class AbstractService(ABC):
         self.data: Dict[str, Any] = dict()
         self.initialize()
 
+    # TODO: add hooks for call method
+
     def __call__(self, *args, **kwargs):
         # TODO: enforce __actions__ defined in subclass
         action: str = self.params.action or self.default_action
@@ -28,7 +30,9 @@ class AbstractService(ABC):
     def initialize(self) -> None:
         pass
 
-    # TODO: add hooks for call method
+    def patch_params(self, **kwargs):
+        self.params = self.params._replace(**kwargs)
+        self.initialize()
 
 
 class ServiceDef(NamedTuple):

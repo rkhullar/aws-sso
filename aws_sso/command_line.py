@@ -15,6 +15,9 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
     service_parsers = extend_parsers(subparsers, service=True, names=['site'])
     action_parsers = extend_parsers(subparsers, service=False, names=['print', 'discover'])
 
+    parser.add_argument('--aws-dir', type=str, default='~/.aws')
+    parser.add_argument('--config-dir', type=str, default='~/.config')
+
     hello_parser = action_parsers['print']
     hello_parser.add_argument('-m', '--message', type=str, default='hello world')
     hello_parser.add_argument('-c', '--count', type=int, default=1)
