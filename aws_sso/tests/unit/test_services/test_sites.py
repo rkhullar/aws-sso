@@ -1,6 +1,6 @@
 from ....services import KeyringAction, SiteLogin, SiteParams, SiteWorker
 from ....model import CommonParams
-from ....utils import mock_input_output
+from ....utils import mock_input_output,combine_contexts
 from nose.tools import assert_equal
 from parameterized import parameterized
 from typing import Optional
@@ -52,5 +52,5 @@ class SitesTest(TestCase):
         domain_username = SiteWorker.build_domain_username(domain=service_params.domain, username=service_params.username)
         keyring_patches = self.build_keyring_patch(domain=service_params.domain, username=domain_username, password=service_params.password)
         worker = SiteWorker(common_params, service_params)
-        with keyring_patches[0], keyring_patches[1], keyring_patches[2], mock_input_output():
+        with combine_contexts(keyring_patches, mock_input_output()):
             worker()
