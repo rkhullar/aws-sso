@@ -1,5 +1,5 @@
 from ...utils import string_contains
-from ...model import RoleTuple
+from .model import RoleTuple
 
 from bs4 import BeautifulSoup
 from requests_ntlm import HttpNtlmAuth
@@ -13,8 +13,8 @@ import requests
 import re
 
 
-
 def part_1(domain: str, username: str, password: str, verify_ssl: bool = True):
+    # TODO: use better function name
     session = requests.Session()
     session.auth = HttpNtlmAuth(username, password)
     idp_entry_url = build_idp_entry_url(domain)
@@ -63,6 +63,7 @@ def find_new_idp_submit_url(response, idp_entry_url: str) -> Optional[str]:
 
 
 def part_2(idp_submit_url: str, payload: Dict[str, str], verify_ssl: bool = True) -> Iterator[RoleTuple]:
+    # TODO: use better function name
     response = requests.post(url=idp_submit_url, data=payload, verify=verify_ssl)
     assertion = find_assertion(response)
     root = parse_assertion(assertion)
