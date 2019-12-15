@@ -70,7 +70,7 @@ def part_2(idp_submit_url: str, payload: Dict[str, str], verify_ssl: bool = True
     return (RoleTuple.from_saml(data) for data in iter_saml_data(root))
 
 
-def find_assertion(response) -> str:
+def find_assertion(response) -> Optional[str]:
     soup = BeautifulSoup(response.text, features="html5lib")
     for input_tag in soup.find_all(re.compile('input')):
         if input_tag.get('name') == 'SAMLResponse':
