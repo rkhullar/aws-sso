@@ -6,4 +6,5 @@ class LoginParams(NamedTuple):
     username: Optional[str] = None
     password: Optional[str] = None
     interactive: Optional[int] = None
+    region: Optional[str] = None
     profile: Optional[str] = None

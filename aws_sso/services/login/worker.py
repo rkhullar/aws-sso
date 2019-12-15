@@ -3,7 +3,9 @@ from ...model import CommonParams
 from ...utils import get_package_root, register_action
 from ..sites import *
 from .core import make_saml, iter_roles, assume_role
+
 from pathlib import Path
+import datetime as dt
 
 
 class LoginWorker(AbstractService):
@@ -33,5 +35,7 @@ class LoginWorker(AbstractService):
 
         print(test_role_tuple)
 
-        credentials = assume_role(role_tuple=test_role_tuple, assertion=assertion, region='us-east-1')
-        print(credentials)
+        credentials = assume_role(role_tuple=test_role_tuple, assertion=assertion, region=self.params.region)
+        time_delta = credentials.expiration - dt.datetime.now(tz=credentials.expiration.tzinfo)
+        seconds = int(time_delta.total_seconds())
+        print(seconds)
