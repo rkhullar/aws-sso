@@ -27,6 +27,7 @@ class AbstractService(ABC):
             handler = self.__actions__[action]
             result = handler(self, *args, **kwargs)
             return result
+        # TODO: handle when action not found
 
     def initialize(self) -> None:
         pass

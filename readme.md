@@ -5,7 +5,7 @@
 $ pip install aws-sso
 $ aws-sso site add --domain example.com --username {your_name}
 $ aws-sso discover --domain example.com --skip-names
-$ aws-sso
+$ aws-sso login --domain example.com
 ```
 
 ``` sh
