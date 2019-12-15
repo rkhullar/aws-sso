@@ -44,10 +44,12 @@ class DiscoveryWorker(AbstractService):
                 profile_name = prompted.strip() or default_profile_name
 
             logging.info('setting profile', extra=dict(name=profile_name, role=role_tuple.role_name, site=site_login.domain))
-            config.add_section(profile_name)
+            if profile_name not in config.sections():
+                config.add_section(profile_name)
             config[profile_name]['principle_arn'] = role_tuple.principle_arn
             config[profile_name]['role_arn'] = role_tuple.role_arn
             write_config(path=profile_path, config=config)
+        print(f'edit profiles at {str(profile_path)}')
 
     @staticmethod
     def build_default_profile_name(domain: str, suffix: Union[int, str]) -> str:
