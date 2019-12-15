@@ -10,12 +10,15 @@ class AbstractService(ABC):
     # cannot define here
     # __actions__: Dict[str, Callable] = dict()
 
-    def __init__(self, common_params: CommonParams, service_params: NamedTuple, default_action: str = 'default'):
+    def __init__(self, common_params: CommonParams, service_params: NamedTuple, default_action: str = 'default', initialize: bool = True):
         self.params: NamedTuple = combine_named_tuples(common_params, service_params, handle_methods=True)
         self.default_action: str = default_action
         self.tools: Dict[str, Any] = dict()
         self.data: Dict[str, Any] = dict()
-        self.initialize()
+        if initialize:
+            self.initialize()
+
+    # TODO: add hooks for call method
 
     def __call__(self, *args, **kwargs):
         # TODO: enforce __actions__ defined in subclass
@@ -28,7 +31,9 @@ class AbstractService(ABC):
     def initialize(self) -> None:
         pass
 
-    # TODO: add hooks for call method
+    def patch_params(self, **kwargs):
+        self.params = self.params._replace(**kwargs)
+        self.initialize()
 
 
 class ServiceDef(NamedTuple):
