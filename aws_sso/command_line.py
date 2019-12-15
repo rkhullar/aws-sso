@@ -13,7 +13,7 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
     subparsers.required = service_required
 
     service_parsers = extend_parsers(subparsers, service=True, names=['site'])
-    action_parsers = extend_parsers(subparsers, service=False, names=['print', 'discover'])
+    action_parsers = extend_parsers(subparsers, service=False, names=['print', 'discover', 'login'])
 
     parser.add_argument('--aws-dir', type=str, default='~/.aws')
     parser.add_argument('--config-dir', type=str, default='~/.config')
@@ -32,6 +32,14 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
 
     service_parsers['site'].add_parser('list')
 
+    login_parser = action_parsers['login']
+    login_parser.add_argument('-d', '--domain', type=str, required=True)
+    login_parser.add_argument('-u', '--username', type=str, required=False)
+    login_parser.add_argument('-p', '--password', type=str, required=False)
+    login_parser.add_argument('-i', '--interactive', action='count')
+    login_parser.add_argument('--region', type=str, default='us-east-1')
+    login_parser.add_argument('--profile', type=str, default='default')
+
     discover_parser = action_parsers['discover']
     discover_parser.add_argument('-d', '--domain', type=str, required=True)
     discover_parser.add_argument('--skip-names', action='count')
@@ -42,6 +50,7 @@ def build_parser(service_required: bool = True) -> ArgumentParser:
 services = {
     'default': ServiceDef(DefaultParams, DefaultWorker),
     'discover': ServiceDef(DiscoveryParams, DiscoveryWorker),
+    'login': ServiceDef(LoginParams, LoginWorker),
     'print': ServiceDef(HelloParams, HelloWorker),
     'site': ServiceDef(SiteParams, SiteWorker),
 }

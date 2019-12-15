@@ -42,6 +42,7 @@ class DiscoveryWorker(AbstractService):
                 print(f'[default = {default_profile_name}] [role = {role_tuple.role_name}]')
                 prompted = input('enter profile name: ')
                 profile_name = prompted.strip() or default_profile_name
+                # TODO: add ability to skip role
 
             logging.info('setting profile', extra=dict(name=profile_name, role=role_tuple.role_name, site=site_login.domain))
             if profile_name not in config.sections():
